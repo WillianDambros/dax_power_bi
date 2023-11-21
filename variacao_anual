@@ -1,0 +1,6 @@
+Variação Anual = 
+VAR ValorAtual = SUM(sefaz_mt_receita_icms_cnae[value])
+VAR ValorAnterior = CALCULATE(SUM(sefaz_mt_receita_icms_cnae[value]), SAMEPERIODLASTYEAR(sefaz_mt_receita_icms_cnae[data_mes]))
+VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
+
+RETURN IF(ISBLANK(ValorAnterior), BLANK(), VariacaoPercentual)
