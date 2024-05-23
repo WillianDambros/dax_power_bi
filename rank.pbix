@@ -1,0 +1,1 @@
+rank_pilar = RANKX(ALL(estados_ranking_clp[ESTADO]), CALCULATE(sum(estados_ranking_clp[nota_valor])), , DESC, Skip)
