@@ -1,0 +1,1 @@
+= if [tipo_transacao] = "Importação" then [VL_FOB] * -1 else [VL_FOB]
