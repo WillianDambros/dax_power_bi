@@ -1,0 +1,7 @@
+texto_titulo_circulo = 
+VAR PRIMEIRA_PARTE = UPPER(SELECTEDVALUE(comercio_exterior_ncm[NO_UF]))
+VAR SEGUNDA_PARTE = UPPER(SELECTEDVALUE(comercio_exterior_ncm[NO_PAIS]))
+VAR INICIO = UPPER(SELECTEDVALUE(comercio_exterior_ncm[tipo_transacao]))
+VAR CONDICAO = IF(INICIO == "EXPORTAÇÃO", "EXPORTADOS", "IMPORTADOS")
+
+RETURN  "PRINCIPAIS PRODUTOS " & CONDICAO & " POR " & PRIMEIRA_PARTE & " X " & SEGUNDA_PARTE & " (US$)"
