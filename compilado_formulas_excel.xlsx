@@ -1,0 +1,8 @@
+
+Verificar Valores que não são correspondentes
+
+=SE(SOMARPRODUTO((B2=territorialidade_municipios_mt!$U$1:$U$142)*1)=1;"";B2)
+
+Puxar Valores Correspondentes
+
+=SEERRO(ÍNDICE(Planilha3!$A$1:$G$140;CORRESP($U2;Planilha3!$B$1:$B$140;0);COL(A1));"")
