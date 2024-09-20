@@ -1,0 +1,15 @@
+# Usar formula na aba "Modelagem" no botão "Nova Tabela" (Importante para fórmulas dax de tempo funcionar)
+
+TabelaCalendario = 
+ADDCOLUMNS(
+    CALENDAR(
+        MIN('TabelaPrincipal'[data_mes]), 
+        MAX('TabelaPrincipal'[data_mes])
+    ),
+    "Ano", YEAR([Date]),
+    "Mês", MONTH([Date]),
+    "NomeMês", FORMAT([Date], "MMMM"),
+    "AnoMês", FORMAT([Date], "YYYYMM"),
+    "Trimestre", QUARTER([Date]),
+    "Dia", DAY([Date])
+)
