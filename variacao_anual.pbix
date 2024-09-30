@@ -1,15 +1,17 @@
 ## Variação Continua Anual
 
-Variação Anual = 
-VAR ValorAtual = SUM(sefaz_mt_receita_icms_cnae[value])
-VAR ValorAnterior = CALCULATE(SUM(sefaz_mt_receita_icms_cnae[value]), SAMEPERIODLASTYEAR(sefaz_mt_receita_icms_cnae[data_mes]))
-VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
+icms_variacao_continua_anual =
 
-RETURN IF(ISBLANK(ValorAnterior), BLANK(), VariacaoPercentual)
+var valor_atual = SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value])
+var valor_anterior = CALCULATE(sum('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), PARALLELPERIOD(TabelaCalendario[Date], -1, YEAR))
+var variacao = DIVIDE(valor_atual - valor_anterior, ABS(valor_atual))
+var temporario = if(ISBLANK(valor_anterior), BLANK(), variacao)
+
+RETURN temporario
 
 ## Variação Pontual Anual
 
-icms_variacao_pontual = 
+icms_variacaoanual_pontual = 
 
 var ano_periodo = 2022
 var ano_periodo_anterior = ano_periodo - 1
