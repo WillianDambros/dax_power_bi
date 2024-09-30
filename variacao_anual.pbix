@@ -7,12 +7,16 @@ VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
 
 RETURN IF(ISBLANK(ValorAnterior), BLANK(), VariacaoPercentual)
 
-Variação Pontual Anual
+## Variação Pontual Anual
 
-variacao_2019_2020 = 
-var valor_2020 = CALCULATE(SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = 2020))
-var valor_2019 = CALCULATE(SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = 2019))
-var variacao = DIVIDE(valor_2020 - valor_2019, ABS(valor_2020))
+variacao_icms_pontual = 
+
+var ano_periodo = 2022
+var ano_periodo_anterior = ano_periodo - 1
+
+var valor_periodo = CALCULATE(SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_periodo))
+var valor_periodo_anterior = CALCULATE(SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_periodo_anterior))
+var variacao = DIVIDE(valor_periodo - valor_periodo_anterior, ABS(valor_periodo))
 
 
 RETURN variacao
