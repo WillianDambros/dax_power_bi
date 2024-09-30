@@ -9,7 +9,7 @@ RETURN IF(ISBLANK(ValorAnterior), BLANK(), VariacaoPercentual)
 
 ## Variação Pontual Anual
 
-variacao_icms_pontual = 
+icms_variacao_pontual = 
 
 var ano_periodo = 2022
 var ano_periodo_anterior = ano_periodo - 1
