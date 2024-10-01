@@ -1,6 +1,0 @@
-Variação Inicial = 
-VAR ValorAtual = SUM(sefaz_mt_receita_icms_cnae[value])
-VAR ValorAnterior = CALCULATE(CALCULATE(SUM(sefaz_mt_receita_icms_cnae[value]), FIRSTDATE(ALL(sefaz_mt_receita_icms_cnae[data_mes]))), REMOVEFILTERS())
-VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
-
-RETURN VariacaoPercentual
