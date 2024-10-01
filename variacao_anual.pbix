@@ -22,3 +22,13 @@ var variacao = DIVIDE(valor_periodo - valor_periodo_anterior, ABS(valor_periodo)
 
 
 RETURN variacao
+
+## Variação Continua Mensal
+
+icms_variacao_continua_mensal = 
+ 
+var valor_atual = SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value])
+var valor_anterior = CALCULATE(sum('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), PARALLELPERIOD(TabelaCalendario[Date], -1, MONTH))
+var variacao = DIVIDE(valor_atual - valor_anterior, ABS(valor_atual))
+
+RETURN if(ISBLANK(valor_anterior), BLANK(), variacao)
