@@ -11,7 +11,7 @@ RETURN temporario
 
 ## Variação Pontual Anual
 
-icms_variacaoanual_pontual = 
+icms_variacao_pontual_anual = 
 
 var ano_periodo = 2022
 var ano_periodo_anterior = ano_periodo - 1
