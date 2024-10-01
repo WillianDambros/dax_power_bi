@@ -32,3 +32,12 @@ var valor_anterior = CALCULATE(sum('sefaz_mt sefaz_mt_receita_icms_cnae'[value])
 var variacao = DIVIDE(valor_atual - valor_anterior, ABS(valor_atual))
 
 RETURN if(ISBLANK(valor_anterior), BLANK(), variacao)
+
+## Variação do Ponto Inicial
+
+icms_variacao_inicial = 
+VAR ValorAtual = SUM(sefaz_mt_receita_icms_cnae[value])
+VAR ValorAnterior = CALCULATE(CALCULATE(SUM(sefaz_mt_receita_icms_cnae[value]), FIRSTDATE(ALL(sefaz_mt_receita_icms_cnae[data_mes]))), REMOVEFILTERS())
+VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
+
+RETURN VariacaoPercentual
