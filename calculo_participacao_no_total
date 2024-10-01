@@ -1,0 +1,12 @@
+Participação saldo em um periodo de tempo
+
+novocaged_participacao_saldo_turismo = 
+
+var ano_referencia = 2022
+
+var valor = CALCULATE(SUM(novocaged[saldomovimentação]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_referencia))
+var valor_turismo = CALCULATE(SUM(novocaged[saldomovimentação]),
+FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_referencia),
+FILTER(novocaged, novocaged[cnae_atividades_caracteristicas_turismo] = "Atividades características de Turismo"))
+
+RETURN valor_turismo/valor
