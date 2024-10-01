@@ -10,3 +10,15 @@ FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_referencia),
 FILTER(novocaged, novocaged[cnae_atividades_caracteristicas_turismo] = "Atividades características de Turismo"))
 
 RETURN valor_turismo/valor
+
+
+Participação do saldo em periodo de tempo no total geral
+comexstat_estado_balanca_comercial = 
+
+var ano_periodo = 2022
+
+var balanca = CALCULATE(SUM(comexstat_estado[VL_FOB_BIVALENTE]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_periodo))
+var balanca_mt = CALCULATE(SUM(comexstat_estado[VL_FOB_BIVALENTE]), FILTER(TabelaCalendario, TabelaCalendario[Ano] = ano_periodo), FILTER(comexstat_estado, comexstat_estado[NO_UF] = "Mato Grosso"))
+
+
+RETURN balanca_mt/balanca
