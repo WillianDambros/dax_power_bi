@@ -30,3 +30,22 @@ VAR mt_exp = SUMX(FILTER(comercio_exterior_ncm, comercio_exterior_ncm[NO_UF] = S
 VAR exp = CALCULATE(SUM(comercio_exterior_ncm[VL_FOB]), ALL(comercio_exterior_ncm[NO_UF]))
 
 return mt_exp/exp
+
+#########################
+(comexstat)
+part_balanca_brasil = 
+VAR estado_bal = SUMX(FILTER(comercio_exterior_sh4, comercio_exterior_sh4[NO_UF] = SELECTEDVALUE(comercio_exterior_sh4[NO_UF])), comercio_exterior_sh4[VL_FOB_BIVALENTE])
+VAR municipio_bal = sumx(filter(comercio_exterior_sh4, comercio_exterior_sh4[NO_MUN_MIN] = SELECTEDVALUE(comercio_exterior_sh4[NO_MUN_MIN])), comercio_exterior_sh4[VL_FOB_BIVALENTE])
+VAR balanca = CALCULATE(SUM(comercio_exterior_sh4[VL_FOB_BIVALENTE]), all(comercio_exterior_sh4[NO_MUN_MIN],comercio_exterior_sh4[NO_UF]))
+VAR balanca_estado = CALCULATE(SUM(comercio_exterior_sh4[VL_FOB_BIVALENTE]), all(comercio_exterior_sh4[NO_MUN_MIN]))
+
+return IF(ISFILTERED(comercio_exterior_sh4[NO_MUN_MIN]), municipio_bal/balanca_estado, "")
+
+part_balanca_estado = 
+VAR estado_bal = SUMX(FILTER(comercio_exterior_sh4, comercio_exterior_sh4[NO_UF] = SELECTEDVALUE(comercio_exterior_sh4[NO_UF])), comercio_exterior_sh4[VL_FOB_BIVALENTE])
+VAR municipio_bal = sumx(filter(comercio_exterior_sh4, comercio_exterior_sh4[NO_MUN_MIN] = SELECTEDVALUE(comercio_exterior_sh4[NO_MUN_MIN])), comercio_exterior_sh4[VL_FOB_BIVALENTE])
+VAR balanca = CALCULATE(SUM(comercio_exterior_sh4[VL_FOB_BIVALENTE]), all(comercio_exterior_sh4[NO_MUN_MIN],comercio_exterior_sh4[NO_UF]))
+
+return if(SELECTEDVALUE(comercio_exterior_sh4[NO_MUN_MIN]) = "", estado_bal/balanca, municipio_bal/balanca)
+
+
