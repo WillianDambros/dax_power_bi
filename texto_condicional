@@ -76,3 +76,32 @@ VAR resultado_final =
     valores_delta & " caiu " & valores_posicao & " em relação à nota passada (" & valores_pilar & ")"
 
 RETURN resultado_final
+
+####################################################################################################################################
+# novocaged "80% dos salários se concentram entre R$ 1.412,00 e R$ 3.000,00, representando 72,85% do montante avaliado."
+concentracao_salarial_2 = 
+VAR Percentil_inferior = PERCENTILE.INC(novocaged_decodificado[salário], 0.1)
+VAR Percentil_superior = PERCENTILE.INC(novocaged_decodificado[salário], 0.9)
+
+-- Calcular o montante total que está entre os percentis inferior e superior
+VAR Montante_Entre_Percentis = 
+    CALCULATE(
+        SUM(novocaged_decodificado[salário]),
+        novocaged_decodificado[salário] >= Percentil_inferior,
+        novocaged_decodificado[salário] <= Percentil_superior
+    )
+
+-- Calcular o total geral de salários
+VAR Total_Salarios = SUM(novocaged_decodificado[salário])
+
+-- Calcular a representatividade percentual do montante entre os percentis
+VAR Representatividade = DIVIDE(Montante_Entre_Percentis, Total_Salarios) * 100
+
+-- Criar o resultado final com formatação
+RETURN 
+"80% dos salários se concentram entre " & 
+FORMAT(Percentil_inferior, "R$ #,##0.00") & 
+" e " & 
+FORMAT(Percentil_superior, "R$ #,##0.00") & 
+", representando " & 
+FORMAT(Representatividade, "#,##0.00") & "% do montante avaliado."
