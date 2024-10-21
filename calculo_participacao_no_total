@@ -22,3 +22,11 @@ var balanca_mt = CALCULATE(SUM(comexstat_estado[VL_FOB_BIVALENTE]), FILTER(Tabel
 
 
 RETURN balanca_mt/balanca
+##########################
+# Participação na expostação (comexstat)
+
+PartExp = 
+VAR mt_exp = SUMX(FILTER(comercio_exterior_ncm, comercio_exterior_ncm[NO_UF] = SELECTEDVALUE(comercio_exterior_ncm[NO_UF])), comercio_exterior_ncm[VL_FOB])
+VAR exp = CALCULATE(SUM(comercio_exterior_ncm[VL_FOB]), ALL(comercio_exterior_ncm[NO_UF]))
+
+return mt_exp/exp
