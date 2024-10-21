@@ -1,3 +1,6 @@
+
+(comexstat)
+
 texto_titulo_circulo = 
 VAR PRIMEIRA_PARTE = UPPER(SELECTEDVALUE(comercio_exterior_ncm[NO_UF]))
 VAR SEGUNDA_PARTE = UPPER(SELECTEDVALUE(comercio_exterior_ncm[NO_PAIS]))
@@ -5,3 +8,71 @@ VAR INICIO = UPPER(SELECTEDVALUE(comercio_exterior_ncm[tipo_transacao]))
 VAR CONDICAO = IF(INICIO == "EXPORTAÇÃO", "EXPORTADOS", "IMPORTADOS")
 
 RETURN  "PRINCIPAIS PRODUTOS " & CONDICAO & " POR " & PRIMEIRA_PARTE & " X " & SEGUNDA_PARTE & " (US$)"
+
+########################################################################################################################################
+# Valor se selecionado #(estados_rankings_clp)
+clp_pilar_selecionado = if(ISFILTERED('clp_ranking_competitividade estados_ranking_clp'[Pilar]),
+(SELECTEDVALUE('clp_ranking_competitividade estados_ranking_clp'[Pilar])),"")
+
+#######################################################################################################################################
+
+#"Equilíbrio de gênero na remuneração pública estadual subiu 43,56 em relação à nota passada (Eficiência da Máquina Pública)" #(estados_rankings_clp)
+
+clp_melhor_delta = 
+VAR primeiro_valor = 
+    TOPN(
+        1, 
+        'clp_ranking_competitividade estados_ranking_clp', 
+        'clp_ranking_competitividade estados_ranking_clp'[Delta 2023 - 2024], 
+        DESC)
+
+VAR valores_delta = 
+    CONCATENATEX(
+        primeiro_valor, 
+        'clp_ranking_competitividade estados_ranking_clp'[INDICADOR], 
+        ", ")
+
+VAR valores_posicao = 
+    ROUND(
+        MAXX(
+            primeiro_valor, 
+            'clp_ranking_competitividade estados_ranking_clp'[Delta 2023 - 2024]), 2)
+
+VAR valores_pilar = 
+    CONCATENATEX(
+        primeiro_valor, 
+        'clp_ranking_competitividade estados_ranking_clp'[Pilar], ", ")
+
+VAR resultado_final = 
+    valores_delta & " subiu " & valores_posicao & " em relação à nota passada (" & valores_pilar & ")"
+
+RETURN resultado_final
+
+########################################################################################################################################
+# "ODS 9, ODS 13 desceu -9 posições" #(estados_rankings_clp)
+
+clp_pior_delta = 
+VAR pior_valor = 
+    TOPN(1, 
+        'clp_ranking_competitividade estados_ranking_clp', 
+        'clp_ranking_competitividade estados_ranking_clp'[Delta 2023 - 2024], 
+        ASC)
+
+VAR valores_delta = 
+    CONCATENATEX(pior_valor, 
+        'clp_ranking_competitividade estados_ranking_clp'[INDICADOR], 
+        ", ")
+
+VAR valores_posicao = 
+    ROUND(MINX(pior_valor, 
+            'clp_ranking_competitividade estados_ranking_clp'[Delta 2023 - 2024]), 2)
+
+VAR valores_pilar = 
+    CONCATENATEX(pior_valor, 
+        'clp_ranking_competitividade estados_ranking_clp'[Pilar], 
+        ", ")
+
+VAR resultado_final = 
+    valores_delta & " caiu " & valores_posicao & " em relação à nota passada (" & valores_pilar & ")"
+
+RETURN resultado_final
