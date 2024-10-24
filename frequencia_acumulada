@@ -1,0 +1,26 @@
+# frequencia acumulada inversa
+
+percentual_acumulado_grauinstrucao = 
+VAR FrequenciaAcumulada = 
+    CALCULATE(
+        COUNTROWS(novocaged_decodificado),
+        FILTER(
+            ALL(novocaged_decodificado),
+            novocaged_decodificado[graudeinstrução_descricao_ordem] >= MAX(novocaged_decodificado[graudeinstrução_descricao_ordem])
+        )
+    )
+
+VAR TotalFrequencia = 
+    CALCULATE(
+        COUNTROWS(novocaged_decodificado),
+        ALL(novocaged_decodificado)
+    )
+
+VAR Resultado = 
+IF(
+    ISBLANK(COUNTROWS(novocaged_decodificado)),
+    BLANK(),
+    DIVIDE(FrequenciaAcumulada, TotalFrequencia)
+)
+
+RETURN Resultado
