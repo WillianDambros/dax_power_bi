@@ -1,0 +1,10 @@
+processo_vigor = 
+VAR Finalizado = 'Página1'[FINALIZADO]
+VAR Entrada = 'Página1'[ENTRADA]
+
+RETURN 
+IF(
+    NOT(ISBLANK(Entrada))&&ISBLANK(Finalizado), 
+    1, 
+    0
+)
