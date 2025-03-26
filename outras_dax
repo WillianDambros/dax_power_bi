@@ -8,3 +8,10 @@ IF(
     1, 
     0
 )
+
+cnpj_limpo = 
+VAR TextoOriginal = 'ministerio_fazenda_cnpj cnpj_estabelecimentos'[cnpj_formatado]
+VAR TextoSemPontos = SUBSTITUTE(TextoOriginal, ".", "")
+VAR TextoSemBarras = SUBSTITUTE(TextoSemPontos, "/", "")
+VAR TextoSemHifens = SUBSTITUTE(TextoSemBarras, "-", "")
+RETURN TextoSemHifens
