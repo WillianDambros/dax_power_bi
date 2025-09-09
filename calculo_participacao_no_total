@@ -48,4 +48,10 @@ VAR balanca = CALCULATE(SUM(comercio_exterior_sh4[VL_FOB_BIVALENTE]), all(comerc
 
 return if(SELECTEDVALUE(comercio_exterior_sh4[NO_MUN_MIN]) = "", estado_bal/balanca, municipio_bal/balanca)
 
+CNPJ_PARTICIPAÇÃO TOTAL EM RELAÇÃO AS ATIVAS
 
+%empresas_ativas_totais = 
+var ValoFiltro = DISTINCTCOUNT('ministerio_fazenda_cnpj cnpj_empresa'[cnpj_basico])
+VAR ValorInteiro = CALCULATE(DISTINCTCOUNT('ministerio_fazenda_cnpj cnpj_empresa'[cnpj_basico]), 'ministerio_fazenda_cnpj cnpj_estabelecimentos'[situacao_cadastral] = "Ativa", REMOVEFILTERS())
+
+RETURN ValoFiltro/ValorInteiro
