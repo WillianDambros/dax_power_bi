@@ -54,3 +54,13 @@ VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ABS(ValorAtual))
 
 RETURN IF(ISBLANK(ValorAnterior), BLANK(), VariacaoPercentual)
 
+Variação Continua Mensal Ano Anterior
+
+Variação Mensal Ano Anterior = 
+VAR ValorAtual = SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value])
+VAR ValorAnterior = CALCULATE(SUM('sefaz_mt sefaz_mt_receita_icms_cnae'[value]), PARALLELPERIOD(TabelaCalendario[Date], -12, MONTH))
+VAR VariacaoPercentual = DIVIDE(ValorAtual - ValorAnterior, ValorAnterior)
+
+VAR Condicional = if(ISBLANK(ValorAtual), BLANK(), VariacaoPercentual)
+
+RETURN if(ISBLANK(ValorAtual), BLANK(), ValorAnterior)
