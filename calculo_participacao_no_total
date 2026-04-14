@@ -55,3 +55,25 @@ var ValoFiltro = DISTINCTCOUNT('ministerio_fazenda_cnpj cnpj_empresa'[cnpj_basic
 VAR ValorInteiro = CALCULATE(DISTINCTCOUNT('ministerio_fazenda_cnpj cnpj_empresa'[cnpj_basico]), 'ministerio_fazenda_cnpj cnpj_estabelecimentos'[situacao_cadastral] = "Ativa", REMOVEFILTERS())
 
 RETURN ValoFiltro/ValorInteiro
+
+
+IBGE - Floresta ########
+
+sivilcultura_estadual_ParticipacaoNacionalArea = 
+
+VAR Valor_UF = 
+    CALCULATE(
+        SUM('ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[rea_total_existente_em_31_12_dos_efetivos_da_silvicultura_hecta]),
+        KEEPFILTERS('ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[Espécie florestal] <> "Total")
+    )
+
+VAR Valor_Brasil =
+    CALCULATE(
+        SUM('ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[rea_total_existente_em_31_12_dos_efetivos_da_silvicultura_hecta]),
+        KEEPFILTERS('ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[Espécie florestal] <> "Total"),
+        ALL('ibge producao_extracao_vegetal_silvicultura__sivilcultura_estadual'[localidade_nome])  // remove só o filtro de UF
+    )
+    
+RETURN DIVIDE(Valor_UF, Valor_Brasil)
+
+#####################
