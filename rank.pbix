@@ -1,1 +1,19 @@
 rank_pilar = RANKX(ALL(estados_ranking_clp[ESTADO]), CALCULATE(sum(estados_ranking_clp[nota_valor])), , DESC, Skip)
+
+rank floresta ################
+
+sivilcutra_estadual_RankArea = 
+RANKX(
+    ALL('ibge producao_extracao_vegetal_silvicultura__sivilcultura_estadual'[localidade_nome]),
+    
+    CALCULATE(
+        SUM('ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[rea_total_existente_em_31_12_dos_efetivos_da_silvicultura_hecta]),
+        
+        KEEPFILTERS(
+            'ibge producao_extracao_vegetal_silvicultura__area_sivilcutura_estadu'[Espécie florestal] IN {"Eucalipto", "Pinus", "Outras espécies"}
+        )
+    ),
+    ,
+    DESC,
+    DENSE
+)
